@@ -13,12 +13,11 @@ bool inside_polygon(polygon_t &polygon, point_t point)
     long double total_area = area(polygon);
     long double sub_area = 0;
     for (unsigned i = 0; i < polygon.size(); i++) {
-        polygon_t triangle;
-        triangle.push_back(point);
-        triangle.push_back(polygon[i]);
-        triangle.push_back(polygon[(i + 1) % polygon.size()]);
-        sub_area += area(triangle);
-        triangle.clear();
+        point_t a = point;
+        point_t b = polygon[i];
+        point_t c = polygon[(i + 1) % polygon.size()];
+
+        sub_area += fabsl((a.first * b.second + b.first * c.second + c.first * a.second) - (a.second * b.first + b.second * c.first + c.second * a.first)) / 2.0;
     }
     return (fabsl(total_area - sub_area) < 1e-10L);
 }
@@ -41,7 +40,7 @@ long double area(polygon_t &polygon)
 long double minimum_enclosing_circle(polygon_t &convex_hull)
 {
     if (convex_hull.size() <= 1) return 0;
-    if (convex_hull.size() == 2) return distance_square(convex_hull[0], convex_hull[1]) / 4;
+    if (convex_hull.size() == 2) return distance_square(convex_hull[0], convex_hull[1]) / 4.0;
     
     point_t s_a = convex_hull[0];
     point_t s_b = convex_hull[1];
@@ -58,7 +57,7 @@ long double minimum_enclosing_circle(polygon_t &convex_hull)
             }
         }
         
-        if (alpha >= M_PI / 2) return distance_square(s_a, s_b) / 4;
+        if (alpha >= M_PI / 2) return distance_square(s_a, s_b) / 4.0;
 
         // printf("s_a:(%ld, %ld) s_b:(%ld, %ld) v:(%ld, %ld)\n", s_a.first, s_a.second, s_b.first, s_b.second, v.first, v.second);
         // printf("angle v-s_a-s_b: %Lf\n", angle(s_a, v, s_b));

@@ -1,14 +1,14 @@
 CXX = g++
-CXX_FLAGS = -O3 -arch x86_64 -Wall
+CXX_FLAGS = -O3 -arch x86_64 -Wall -lpthread
 
 .PHONY: all
-all : bruteforce clean
+all : pointpacker clean
 
-bruteforce : geometry.o bruteforce.o
-	$(CXX) bruteforce.o geometry.o -o bruteforce $(CXX_FLAGS)
+pointpacker : geometry.o pointpacker.o
+	$(CXX) pointpacker.o geometry.o -o pointpacker $(CXX_FLAGS)
 
-bruteforce.o : bruteforce.cpp geometry.h
-	$(CXX) -c bruteforce.cpp $(CXX_FLAGS)
+pointpacker.o : pointpacker.cpp geometry.h
+	$(CXX) -c pointpacker.cpp $(CXX_FLAGS)
 
 geometry.o : geometry.cpp geometry.h
 	$(CXX) -c geometry.cpp $(CXX_FLAGS)
