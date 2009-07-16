@@ -1,0 +1,7 @@
+linux1: 15
+linux2: 14 (114.794)
+linux3: 12 (62.1653)
+linux6: 
+cn: 13 (92.5)
+bill: 25
+grok: 26
