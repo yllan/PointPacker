@@ -129,7 +129,7 @@ void generate_boundary(polygon_t &boundary, unsigned length, int interiors, long
         pthread_mutex_lock(&mtx);
         if (circle_area < max_circle_area) {
             max_circle_area = circle_area;
-            cout << length << ": ";
+            cout << length << "/" << normalized.size() << ": ";
             print_solution(normalized);
             cout << "circle area=" << circle_area << endl;
                 
@@ -252,10 +252,15 @@ int main(int argc, char *argv[])
 {
     int n;
     if (argc <= 1) {
-        cout << "usage: bruteforce n" << endl;
+        cout << "usage: bruteforce n [bound]" << endl;
         return 0;
     }
     n = atoi(argv[1]);
+    if (argc > 2) {
+        max_circle_area = atof(argv[2]);
+        max_diagonal_square = max_circle_area * 8;
+    }
+    
     solve(n);
     // cout << minimum_enclosing_circle(polygon) << endl;
     return 0;
